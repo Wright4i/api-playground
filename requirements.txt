@@ -7,7 +7,6 @@ requests
 sqlalchemy
 databases
 aiosqlite
-httptools
 websockets
 gunicorn
 python-dotenv

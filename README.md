@@ -150,16 +150,16 @@ This API playground serves as a platform for users to test their API clients dur
     ```shell
     git clone https://github.com/wright4i/api-playground.git
     ```
-2. Navigate to the project directory:
+2. Create a virtual environment:
     ```shell
-    cd api-playground
+    python3 -m venv --system-site-packages api-playground
     ```
-3. Create a virtual environment:
-    ```shell
-    python3 -m venv api-playground
-    ```
-4. Activate the virtual environment:
-    - On macOS/Linux/Unix:
+3. Activate the virtual environment:
+    - On PASE (IBM i):
+        ```shell
+        . api-playground/bin/activate
+        ```
+    - On macOS/Linux:
         ```shell
         source api-playground/bin/activate
         ```
@@ -167,6 +167,10 @@ This API playground serves as a platform for users to test their API clients dur
         ```shell
         api-playground\Scripts\activate
         ```
+4. Change directory:
+    ```shell
+    cd api-playground
+    ```
 5. Install the required packages:
     ```shell
     pip install -r requirements.txt
