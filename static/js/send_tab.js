@@ -32,7 +32,7 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
 
     body = method === 'GET' ? null : body;
 
-    const requestBody = JSON.stringify({ url, method, headers, body });
+    const requestBody = JSON.stringify({ url, method, headers: {}, body });
 
     console.log(`Request Body: ${requestBody}`);
 
@@ -45,7 +45,7 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
 
         const result = await response.json();
         const statusCode = result.status_code || 400;
-        const content = result.content;
+        const content = result.content || result.detail;     
 
         showToast(`HTTP Status Code: ${statusCode}`, statusCode >= 200 && statusCode < 300 ? 'is-success' : 'is-danger');
 
