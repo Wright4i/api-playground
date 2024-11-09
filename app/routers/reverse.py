@@ -21,8 +21,7 @@ class ReverseRequest(BaseModel):
 
 def is_local_address(url: str) -> bool:
     local_addresses = ["localhost", "127.0.0.1", "::1"]
-    local_addresses.append(socket.gethostbyname(socket.gethostname()))
-    local_addresses.append(os.getenv("HOST"))  
+    local_addresses.append(f"{os.getenv('HOST')}:{os.getenv('PORT')}")  
     return any(local_address in url for local_address in local_addresses)
 
 @router.put("/reverse/")
