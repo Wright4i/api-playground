@@ -1,13 +1,14 @@
-from fastapi import APIRouter, Request, Response
+from fastapi import APIRouter, Request, Response, Depends
 import json
+from sqlalchemy.orm import Session
 from app.utils import validate_token
-from app.connections.sqlite import database as db
+from app.connections.sqlite import get_db 
 from app.routers.websocket import manager, broadcast_message
 
 router = APIRouter()
 
 @router.api_route("/echo/{path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "CONNECT", "TRACE"])
-async def echo_all(request: Request, response: Response):
+async def echo_all(request: Request, response: Response, db: Session = Depends(get_db)): 
     body = await request.body()
     message = body.decode("utf-8")
     response_data = {
