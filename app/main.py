@@ -65,19 +65,6 @@ async def read_root(request: Request):
 async def requests_page(request: Request):
     return templates.TemplateResponse("requests.html", {"request": request})
 
-@app.get("/api/kpi-metrics")
-async def get_kpi_metrics(db: Session = Depends(get_db)):
-    unique_visitors = db.execute(text("SELECT COUNT(DISTINCT sender) FROM requests")).scalar()
-    total_requests = db.execute(text("SELECT COUNT(*) FROM requests")).scalar()
-    success = db.execute(text("SELECT COUNT(*) FROM requests WHERE status_code < 400")).scalar()
-    failure = db.execute(text("SELECT COUNT(*) FROM requests WHERE status_code >= 400")).scalar()
-    return {
-        "uniqueVisitors": unique_visitors,
-        "totalRequests": total_requests,
-        "success": success,
-        "failure": failure
-    }
-
 @app.post("/admin/reset-employee")
 async def reset_employee(db: Session = Depends(get_db)):
     db.execute(text("DELETE FROM EMPLOYEE"))
