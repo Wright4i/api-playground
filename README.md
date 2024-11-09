@@ -148,7 +148,7 @@ This API playground serves as a platform for users to test their API clients dur
 ## Implementation Steps
 1. Clone the repository:
     ```shell
-    git clone https://github.com/wright4i/api=playground.git
+    git clone https://github.com/wright4i/api-playground.git
     ```
 2. Navigate to the project directory:
     ```shell
