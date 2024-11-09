@@ -8,5 +8,5 @@ async def validate_token(tokens_db, authorization: str = Header(None)):
         user = tokens_db.execute(query)
         user = user.fetchone()
         if user:
-            return {"status": "VALID", "username": user["name"]}
+            return {"status": "VALID", "username": user[1]} 
     return {"status": "INVALID", "username": None}
