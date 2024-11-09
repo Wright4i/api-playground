@@ -183,7 +183,7 @@ This API playground serves as a platform for users to test their API clients dur
 
 7. Run the application:
     ```shell
-    uvicorn app.main:app --reload --port 10500
+    uvicorn app.main:app --reload --host 0.0.0.0 --port 10500
     ```
 
 ## Project Structure
