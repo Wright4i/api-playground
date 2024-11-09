@@ -1,0 +1,38 @@
+<div id="department" class="tab-content is-hidden">
+    <h1 class="title">Department Table</h1>
+    <div class="level">
+        <div class="level-left">
+            <button class="button is-primary" onclick="refreshDepartments()">Refresh</button>
+            <span id="department-total-rows" class="ml-4"></span>
+        </div>
+        <div class="level-right">
+            <div class="select">
+                <select id="department-limit" onchange="changeDepartmentLimit()">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="table-container scrollable-table">
+        <table class="table is-fullwidth is-striped is-narrow mt-4">
+            <thead>
+                <tr>
+                    <th>Department ID</th>
+                    <th>Department Name</th>
+                    <th>Manager</th>
+                    <th>Admin Department</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody id="department-table-body"></tbody>
+        </table>
+    </div>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <a class="pagination-previous button is-link is-light" id="department-previous" onclick="previousDepartmentPage()">Previous</a>
+        <a class="pagination-next button is-link is-dark" id="department-next" onclick="nextDepartmentPage()">Next</a>
+        <ul class="pagination-list" id="department-pagination-list"></ul>
+    </nav>
+</div>

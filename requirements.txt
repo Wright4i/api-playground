@@ -1,0 +1,14 @@
+pydantic==1.10.18
+watchfiles==0.0.0a1
+fastapi
+uvicorn
+jinja2
+requests
+sqlalchemy
+databases
+aiosqlite
+httptools
+websockets
+gunicorn
+python-dotenv
+faker

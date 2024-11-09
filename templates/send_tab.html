@@ -1,0 +1,54 @@
+<div id="send" class="tab-content is-hidden">
+    <h1 class="title">Send API Call</h1>
+    <form id="reverse-form">
+        <div class="field">
+            <label class="label" for="url">URL:</label>
+            <div class="control">
+                <input class="input" type="text" id="url" name="url" required>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="method">Method:</label>
+            <div class="control">
+                <div class="select">
+                    <select id="method" name="method" required>
+                        <option value="GET">GET</option>
+                        <option value="PUT">PUT</option>
+                        <option value="PATCH">PATCH</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="content-type">Content Type:</label>
+            <div class="control">
+                <div class="select">
+                    <select id="content-type" name="content-type" required>
+                        <option value="text">Text</option>
+                        <option value="json">JSON</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label" for="body">Body:</label>
+            <div class="control">
+                <textarea class="textarea" id="body" name="body"></textarea>
+            </div>
+        </div>
+        <div class="control">
+            <button class="button is-link" type="submit">Send Request</button>
+        </div>
+    </form>
+    <div class="card mt-4">
+        <header class="card-header">
+            <p class="card-header-title">Response:</p>
+        </header>
+        <div class="card-content">
+            <div id="send-result">
+                <div id="status-code" class="mb-2"></div>
+                <pre><code id="response-content" class="json"></code></pre>
+            </div>
+        </div>
+    </div>
+</div>

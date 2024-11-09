@@ -1,0 +1,346 @@
+openapi: 3.0.0
+info:
+  title: API Playground
+  version: 1.0.0
+  description: This is the API documentation for the API Playground.
+servers:
+  - url: http://localhost:10500
+paths:
+  /auth/:
+    post:
+      summary: Generate a token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+  /auth/{name}:
+    delete:
+      summary: Delete a token
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    get:
+      summary: Get a token by name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+  /auth/tokens:
+    get:
+      summary: Get all tokens
+      responses:
+        '200':
+          description: List of tokens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /employees:
+    get:
+      summary: Get paginated list of employees
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of employees
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employees:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EmployeeSchema'
+                  totalPages:
+                    type: integer
+                  totalRows:
+                    type: integer
+    put:
+      summary: Create a new employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdate'
+      responses:
+        '201':
+          description: Employee created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeSchema'
+  /employees/{id}:
+    get:
+      summary: Get an employee by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Employee retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeSchema'
+    patch:
+      summary: Update an employee by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdate'
+      responses:
+        '200':
+          description: Employee updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeSchema'
+  /departments:
+    get:
+      summary: Get paginated list of departments
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of departments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  departments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DepartmentSchema'
+                  totalPages:
+                    type: integer
+                  totalRows:
+                    type: integer
+    put:
+      summary: Create a new department
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentUpdate'
+      responses:
+        '201':
+          description: Department created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentSchema'
+  /departments/{id}:
+    get:
+      summary: Get a department by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Department retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentSchema'
+    patch:
+      summary: Update a department by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentUpdate'
+      responses:
+        '200':
+          description: Department updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentSchema'
+  /echo:
+    get:
+      summary: Echo request
+      responses:
+        '200':
+          description: Echo response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uri:
+                    type: string
+                  method:
+                    type: string
+                  body:
+                    type: string
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+    EmployeeSchema:
+      type: object
+      properties:
+        EMPNO:
+          type: string
+        FIRSTNME:
+          type: string
+        MIDINIT:
+          type: string
+        LASTNAME:
+          type: string
+        WORKDEPT:
+          type: string
+        PHONENO:
+          type: string
+        HIREDATE:
+          type: string
+        JOB:
+          type: string
+        EDLEVEL:
+          type: integer
+        SEX:
+          type: string
+        BIRTHDATE:
+          type: string
+        SALARY:
+          type: number
+        BONUS:
+          type: number
+        COMM:
+          type: number
+    EmployeeUpdate:
+      type: object
+      properties:
+        FIRSTNME:
+          type: string
+        MIDINIT:
+          type: string
+        LASTNAME:
+          type: string
+        WORKDEPT:
+          type: string
+        PHONENO:
+          type: string
+        HIREDATE:
+          type: string
+        JOB:
+          type: string
+        EDLEVEL:
+          type: integer
+        SEX:
+          type: string
+        BIRTHDATE:
+          type: string
+        SALARY:
+          type: number
+        BONUS:
+          type: number
+        COMM:
+          type: number
+    DepartmentSchema:
+      type: object
+      properties:
+        DEPTNO:
+          type: string
+        DEPTNAME:
+          type: string
+        MGRNO:
+          type: string
+        ADMRDEPT:
+          type: string
+        LOCATION:
+          type: string
+    DepartmentUpdate:
+      type: object
+      properties:
+        DEPTNO:
+          type: string
+        DEPTNAME:
+          type: string
+        MGRNO:
+          type: string
+        ADMRDEPT:
+          type: string
+        LOCATION:
+          type: string

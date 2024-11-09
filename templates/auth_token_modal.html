@@ -1,0 +1,45 @@
+<div class="modal" id="auth-modal">
+    <div class="modal-background" onclick="closeAuthModal()"></div>
+    <div class="modal-card" style="width: 50%; height: 80%;">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Generate Auth Tokens</p>
+            <button class="delete" aria-label="close" onclick="closeAuthModal()"></button>
+        </header>
+        <section class="modal-card-body" style="overflow-y: auto;">
+            <form id="auth-form">
+                <div class="field">
+                    <label class="label" for="name">Name:</label>
+                    <div class="control">
+                        <input class="input" type="text" id="name" name="name" required>
+                    </div>
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="button" id="generate-button" onclick="generateToken()">Generate Token</button>
+                </div>
+            </form>
+            <div class="card mt-4">
+                <header class="card-header">
+                    <p class="card-header-title">Existing Tokens</p>
+                </header>
+                <div class="card-content" style="max-height: 45vh; overflow-y: auto;">
+                    <table class="table is-fullwidth is-striped" id="tokens-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Token</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Tokens will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot" style="justify-content: space-between;">
+            <button class="button" onclick="closeAuthModal()">Close</button>
+            <article id="auth-result-message" class="is-hidden"><div id="auth-result" class="message-body"></div></article>
+        </footer>
+    </div>
+</div>

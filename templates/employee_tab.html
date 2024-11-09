@@ -1,0 +1,47 @@
+<div id="employee" class="tab-content is-hidden">
+    <h1 class="title">Employee Table</h1>
+    <div class="level">
+        <div class="level-left">
+            <button class="button is-primary" onclick="refreshEmployees()">Refresh</button>
+            <span id="employee-total-rows" class="ml-4"></span>
+        </div>
+        <div class="level-right">
+            <div class="select">
+                <select id="employee-limit" onchange="changeEmployeeLimit()">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="table-container scrollable-table">
+        <table class="table is-fullwidth is-striped is-narrow mt-4">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Middle Initial</th>
+                    <th>Last Name</th>
+                    <th>Work Department</th>
+                    <th>Phone Number</th>
+                    <th>Hire Date</th>
+                    <th>Job</th>
+                    <th>Education Level</th>
+                    <th>Sex</th>
+                    <th>Birth Date</th>
+                    <th>Salary</th>
+                    <th>Bonus</th>
+                    <th>Commission</th>
+                </tr>
+            </thead>
+            <tbody id="employee-table-body"></tbody>
+        </table>
+    </div>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <a class="pagination-previous button is-link is-light" id="employee-previous" onclick="previousEmployeePage()">Previous</a>
+        <a class="pagination-next button is-link is-dark" id="employee-next" onclick="nextEmployeePage()">Next</a>
+        <ul class="pagination-list" id="employee-pagination-list"></ul>
+    </nav>
+</div>

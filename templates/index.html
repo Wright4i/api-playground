@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Playground</title>
+    <!-- Include Bulma CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+    <!-- Include Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Include custom CSS -->
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <!-- Include Highlight.js CSS for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css" rel="stylesheet">
+    <link href="/static/css/dracula.css" rel="stylesheet">
+    <!-- Include Bulma Tooltip CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-tooltip/dist/css/bulma-tooltip.min.css">
+    <script>
+        const host = "{{ host }}";
+        const port = "{{ port }}";
+        const nodeLink = "{{ node_link }}";
+        const phpLink = "{{ php_link }}";
+        const pythonLink = "{{ python_link }}";
+        const swaggerLink = "{{ swagger_link }}";
+        const adminPass = "{{ admin_pass }}";
+        </script>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <section class="hero is-small">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">Welcome to the <span class="has-text-info">API Playground</span></h1>
+                    </div>
+                </div>
+            </section>
+            <div class="columns mt-4">
+                <div class="column">
+                    <div class="box">
+                        <h2>Toolbox:</h2>
+                        <div class="buttons mt-4">
+                            <button class="button is-primary" onclick="openAuthModal()">
+                                <i class="fas fa-key"></i>&nbsp;Generate Auth Tokens
+                            </button>
+                            <button class="button is-danger is-light is-inverted has-background-grey-darker is-outlined" onclick="openAdminModal()">
+                                <i class="fas fa-cog"></i>&nbsp;Admin Panel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="box">
+                        <h2>API Guides:</h2>
+                        <div class="buttons mt-4">
+                            <a class="button is-success is-outlined is-light" href="{{ node_link }}" target="_blank">
+                                <i class="fab fa-node-js"></i>&nbsp;Node.js
+                            </a>
+                            <a class="button is-info is-outlined is-light" href="{{ php_link }}" target="_blank">
+                                <i class="fab fa-php"></i>&nbsp;PHP
+                            </a>
+                            <a class="button is-link is-outlined is-light" href="{{ python_link }}" target="_blank">
+                                <i class="fab fa-python"></i>&nbsp;Python
+                            </a>
+                            <a class="button is-warning is-outlined is-light" href="{{ swagger_link }}" target="_blank">
+                                <i class="fas fa-book"></i>&nbsp;API Specs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tabs is-boxed mt-4">
+                <ul>
+                    <li class="is-active" id="receive-tab">
+                        <a onclick="showTab('receive')">Receive&nbsp;<i class="fas fa-inbox"></i></a>
+                    </li>
+                    <li id="send-tab">
+                        <a onclick="showTab('send')">Send&nbsp;<i class="fas fa-paper-plane"></i></a>
+                    </li>
+                    <li id="employee-tab">
+                        <a onclick="showTab('employee')">Employee&nbsp;<i class="fas fas fas fa-database"></i></a>
+                    </li>
+                    <li id="department-tab">
+                        <a onclick="showTab('department')">Department&nbsp;<i class="fas fas fas fa-database"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Include Send Tab -->
+            {% include 'send_tab.html' %}
+            <!-- Include Receive Tab -->
+            {% include 'receive_tab.html' %}
+            <!-- Include Employee Tab -->
+            {% include 'employee_tab.html' %}
+            <!-- Include Department Tab -->
+            {% include 'department_tab.html' %}
+        </div>
+    </section>
+
+    <!-- Include Auth Token Modal -->
+    {% include 'auth_token_modal.html' %}
+
+    <!-- Include Admin Panel Modal -->
+    {% include 'admin_panel_modal.html' %}
+
+    <!-- Toast Notification -->
+    <div id="toast" class="notification toast has-text-centered is-align-items-center is-justify-content-center mb-0"></div>
+
+    <!-- Include custom JavaScript -->
+    <script src="/static/js/index.js"></script>
+    <script src="/static/js/send_tab.js"></script>
+    <script src="/static/js/receive_tab.js"></script>
+    <script src="/static/js/employee_tab.js"></script>
+    <script src="/static/js/department_tab.js"></script>
+    <script src="/static/js/auth_token_modal.js"></script>
+    <script src="/static/js/admin_panel_modal.js"></script>
+    <!-- Include Highlight.js JS for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>

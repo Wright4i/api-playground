@@ -1,0 +1,94 @@
+<div id="receive" class="tab-content">
+    <h1 class="title">Incoming Requests</h1>
+    <table class="table is-fullwidth is-striped">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>URI</th>
+                <th class="has-text-centered">HTTP Code</th>
+                <th>Sender IP</th>
+                <th class="has-text-centered">Authorization Token</th>
+                <th>Authorization User</th>
+                <th class="has-text-centered">Request Body</th>
+                <th class="has-text-centered">Response Body</th>
+            </tr>
+        </thead>
+        <tbody id="messages"></tbody>
+    </table>
+</div>
+
+<!-- Modal for displaying request and response bodies -->
+<div id="body-modal" class="modal">
+    <div class="modal-background" onclick="closeModal()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Body Content</p>
+            <button class="delete" aria-label="close" onclick="closeModal()"></button>
+        </header>
+        <section class="modal-card-body">
+            <pre><code id="body-content" class="json hljs"></code></pre>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" onclick="closeModal()">Close</button>
+        </footer>
+    </div>
+</div>
+
+<!-- Modal for displaying bearer token -->
+<div id="token-modal" class="modal">
+    <div class="modal-background" onclick="closeTokenModal()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head" id="token-modal-header">
+            <p class="modal-card-title">Bearer Token</p>
+            <button class="delete" aria-label="close" onclick="closeTokenModal()"></button>
+        </header>
+        <section class="modal-card-body">
+            <pre><code id="token-content" class="json hljs"></code></pre>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" onclick="closeTokenModal()">Close</button>
+        </footer>
+    </div>
+</div>
+
+<script>
+function formatJson(content) {
+    try {
+        const jsonObj = JSON.parse(content);
+        return JSON.stringify(jsonObj, null, 2);
+    } catch (e) {
+        return content;
+    }
+}
+
+function openModal(content) {
+    const formattedContent = formatJson(content);
+    document.getElementById('body-content').textContent = formattedContent;
+    document.getElementById('body-modal').classList.add('is-active');
+    hljs.highlightElement(document.getElementById('body-content'));
+}
+
+function closeModal() {
+    document.getElementById('body-modal').classList.remove('is-active');
+}
+
+function openTokenModal(content, isValid) {
+    const formattedContent = formatJson(content);
+    document.getElementById('token-content').textContent = formattedContent;
+    document.getElementById('token-modal').classList.add('is-active');
+    hljs.highlightElement(document.getElementById('token-content'));
+
+    const tokenModalHeader = document.getElementById('token-modal-header');
+    if (isValid) {
+        tokenModalHeader.classList.add('has-background-success');
+        tokenModalHeader.classList.remove('has-background-danger');
+    } else {
+        tokenModalHeader.classList.add('has-background-danger');
+        tokenModalHeader.classList.remove('has-background-success');
+    }
+}
+
+function closeTokenModal() {
+    document.getElementById('token-modal').classList.remove('is-active');
+}
+</script>

@@ -1,0 +1,8 @@
+.pytest_cache/
+.vscode/
+bin/
+lib/
+.env
+pyvenv.cfg
+app/db/
+.DS_Store

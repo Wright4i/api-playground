@@ -1,0 +1,32 @@
+<div class="modal" id="admin-modal">
+    <div class="modal-background" onclick="closeAdminModal()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Admin Panel</p>
+            <button class="delete" aria-label="close" onclick="closeAdminModal()"></button>
+        </header>
+        <section class="modal-card-body" style="overflow-y: auto;">
+            <div class="columns">
+                <div class="column">
+                    <div id="password-field">
+                        <div class="control">
+                            <input class="input mb-4" type="password" id="admin-password" name="admin-password" maxlength="10" required placeholder="Admin Password">
+                        </div>
+                    </div>
+                    <div class="box">
+                        <button class="button is-fullwidth is-inverted is-danger has-tooltip-bottom" id="reset-employee" disabled data-tooltip="Unauthorized" onclick="resetEmployee()">Reset EMPLOYEE</button>
+                    </div>
+                    <div class="box">
+                        <button class="button is-fullwidth is-inverted is-danger has-tooltip-bottom" id="reset-department" disabled data-tooltip="Unauthorized" onclick="resetDepartment()">Reset DEPARTMENT</button>
+                    </div>
+                    <div class="box">
+                        <button class="button is-fullwidth is-inverted is-danger has-tooltip-bottom" id="reset-token" disabled data-tooltip="Unauthorized" onclick="resetToken()">Reset TOKEN</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button" onclick="closeAdminModal()">Close</button>
+        </footer>
+    </div>
+</div>

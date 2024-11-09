@@ -1,0 +1,43 @@
+.valid-icon {
+    color: green;
+}
+.invalid-icon {
+    color: red;
+}
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: none;
+    opacity: 1;
+    transition: opacity 250ms ease-out;
+}
+.toast.fade-out {
+    opacity: 0;
+}
+#auth-result {
+    background-color: transparent;
+    text-align: right;
+    width: 100%;
+    align-self: center;
+}
+.scrollable-table {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 50vh;
+}
+.table td, .table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table tbody tr {
+    overflow: visible;
+}
+
+.table tbody td {
+    overflow: visible;
+}
