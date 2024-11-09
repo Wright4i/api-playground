@@ -1,4 +1,5 @@
 # API Playground
+<img width="1420" alt="image" src="https://github.com/user-attachments/assets/72c14348-e382-4fc9-a908-5ed577e39ed4">
 
 ## Overview
 This API playground serves as a platform for users to test their API clients during a workshop. It is built using Python with the FastAPI library. The host features a simple yet robust frontend that provides the following functionalities:
