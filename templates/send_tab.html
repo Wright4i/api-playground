@@ -36,8 +36,13 @@
                 <textarea class="textarea" id="body" name="body"></textarea>
             </div>
         </div>
-        <div class="control">
-            <button class="button is-link" type="submit">Send Request</button>
+        <div class="columns is-vcentered">
+            <div class="column control is-one-fifth">
+                <button class="button is-link is-fullwidth" type="submit" id="send-request-button">Send Request</button>
+            </div>
+            <div class="column control is-four-fifths">
+                <progress class="progress is-primary" value="0" max="100" id="send-progress-bar" style="display: none"></progress>
+            </div>
         </div>
     </form>
     <div class="card mt-4">

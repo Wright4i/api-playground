@@ -38,17 +38,17 @@ async def reverse_api_call(reverse_request: ReverseRequest):
     try:
         headers = reverse_request.headers
         if reverse_request.method.upper() == "GET":
-            response = requests.get(reverse_request.url, headers=headers)
+            response = requests.get(reverse_request.url, headers=headers, timeout=10)
         elif reverse_request.method.upper() == "PUT":
             if headers.get("Content-Type") == "application/json":
-                response = requests.put(reverse_request.url, json=json.loads(reverse_request.body), headers=headers)
+                response = requests.put(reverse_request.url, json=json.loads(reverse_request.body), headers=headers, timeout=10)
             else:
-                response = requests.put(reverse_request.url, data=reverse_request.body, headers=headers)
+                response = requests.put(reverse_request.url, data=reverse_request.body, headers=headers, timeout=10)
         elif reverse_request.method.upper() == "PATCH":
             if headers.get("Content-Type") == "application/json":
-                response = requests.patch(reverse_request.url, json=json.loads(reverse_request.body), headers=headers)
+                response = requests.patch(reverse_request.url, json=json.loads(reverse_request.body), headers=headers, timeout=10)
             else:
-                response = requests.patch(reverse_request.url, data=reverse_request.body, headers=headers)
+                response = requests.patch(reverse_request.url, data=reverse_request.body, headers=headers, timeout=10)
         else:
             raise HTTPException(status_code=400, detail="Invalid request method")
         
