@@ -41,24 +41,16 @@ def generate_employee_data(db, fake, empno_counter):
     employees = []
     for _ in range(50):
         emp = Employee(
-            EMPNO=str(empno_counter),  # Use sequential EMPNO
-            FIRSTNME=fake.first_name(),
-            MIDINIT=fake.random_letter().upper(),
-            LASTNAME=fake.last_name(),
-            WORKDEPT=None,
-            PHONENO=fake.bothify(text='####'),
-            HIREDATE=fake.date_this_decade(),
-            JOB=fake.job(),
-            EDLEVEL=fake.random_int(min=1, max=20),
-            SEX=fake.random_element(elements=['M', 'F']),
-            BIRTHDATE=fake.date_of_birth(minimum_age=18, maximum_age=65),
-            SALARY=fake.random_number(digits=5),
-            BONUS=fake.random_number(digits=4),
-            COMM=fake.random_number(digits=4)
+            id=str(empno_counter),  # Use sequential id
+            first=fake.first_name(),
+            last=fake.last_name(),
+            job=fake.job(),
+            workdept=None,
+            salary=fake.random_number(digits=5)
         )
         db.add(emp)
         employees.append(emp)
-        empno_counter += 1  # Increment EMPNO for the next employee
+        empno_counter += 1  # Increment id for the next employee
     db.commit()
     return employees
 
@@ -69,27 +61,21 @@ def generate_department_data(db, fake, employees):
         ('FIN', 'Finance'),
         ('MKT', 'Marketing'),
         ('OPS', 'Operations'),
-        ('ENG', 'Engineering'),
         ('R&D', 'Research and Development'),
         ('QA', 'Quality Assurance'),
-        ('PR', 'Public Relations'),
         ('MIS', 'Management Information Systems'),
-        ('WHS', 'Warehouse'),
-        ('AR', 'Accounts Receivable'),
-        ('AP', 'Accounts Payable'),
         ('CS', 'Customer Service'),
         ('ADM', 'Administration')
     ]
 
     departments = []
     for abbr, name in department_data:
-        mgrno = fake.random_element(elements=[emp.EMPNO for emp in employees]) if employees else None
+        mgrno = fake.random_element(elements=[emp.id for emp in employees]) if employees else None
         dept = Department(
-            DEPTNO=abbr,
-            DEPTNAME=name,
-            MGRNO=mgrno,
-            ADMRDEPT=fake.random_element(elements=[d[0] for d in department_data]),
-            LOCATION=fake.city()
+            id=abbr,
+            name=name,
+            manager=mgrno,
+            location=fake.city()
         )
         db.add(dept)
         departments.append(dept)
@@ -119,7 +105,7 @@ def generate_fake_data(generate_employees=True, generate_departments=True):
                 departments = generate_department_data(db, fake, employees)
 
         for emp in employees:
-            emp.WORKDEPT = fake.random_element(elements=[dept.DEPTNO for dept in departments])
+            emp.workdept = fake.random_element(elements=[dept.id for dept in departments])
         db.commit()
 
     except Exception as e:

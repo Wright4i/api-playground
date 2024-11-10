@@ -94,14 +94,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  length:
+                    type: number
                   employees:
                     type: array
                     items:
-                      $ref: '#/components/schemas/EmployeeSchema'
-                  totalPages:
-                    type: integer
-                  totalRows:
-                    type: integer
+                      $ref: '#/components/schemas/Employee'
     put:
       summary: Create a new employee
       requestBody:
@@ -109,14 +107,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmployeeUpdate'
+              type: object
+              required:
+                - employee
+              properties:
+                employee:
+                  $ref: '#/components/schemas/Employee'
       responses:
         '201':
           description: Employee created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmployeeSchema'
+                type: object
+                properties:
+                  employee:
+                    $ref: '#/components/schemas/Employee'
   /employees/{id}:
     get:
       summary: Get an employee by ID
@@ -126,13 +132,20 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 6
+            maxLength: 6
       responses:
         '200':
           description: Employee retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmployeeSchema'
+                type: object
+                properties:
+                  employee:
+                    $ref: '#/components/schemas/Employee'
+        '404':
+          description: Not Found
     patch:
       summary: Update an employee by ID
       parameters:
@@ -141,19 +154,29 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 6
+            maxLength: 6
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmployeeUpdate'
+              type: object
+              required:
+                - employee
+              properties:
+                employee:
+                  $ref: '#/components/schemas/Employee'
       responses:
         '200':
           description: Employee updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmployeeSchema'
+                type: object
+                properties:
+                  employee:
+                    $ref: '#/components/schemas/Employee'
   /departments:
     get:
       summary: Get paginated list of departments
@@ -174,14 +197,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  length:
+                    type: number
                   departments:
                     type: array
                     items:
-                      $ref: '#/components/schemas/DepartmentSchema'
-                  totalPages:
-                    type: integer
-                  totalRows:
-                    type: integer
+                      $ref: '#/components/schemas/Department'
     put:
       summary: Create a new department
       requestBody:
@@ -189,14 +210,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DepartmentUpdate'
+              type: object
+              required:
+                - department
+              properties:
+                department:
+                  $ref: '#/components/schemas/Department'
       responses:
         '201':
           description: Department created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DepartmentSchema'
+                type: object
+                properties:
+                  department:
+                    $ref: '#/components/schemas/Department'
   /departments/{id}:
     get:
       summary: Get a department by ID
@@ -206,13 +235,20 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 3
+            maxLength: 3
       responses:
         '200':
           description: Department retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DepartmentSchema'
+                type: object
+                properties:
+                  department:
+                    $ref: '#/components/schemas/Department'
+        '404':
+          description: Not Found
     patch:
       summary: Update a department by ID
       parameters:
@@ -221,19 +257,29 @@ paths:
           required: true
           schema:
             type: string
+            minLength: 3
+            maxLength: 3
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DepartmentUpdate'
+              type: object
+              required:
+                - department
+              properties:
+                department:
+                  $ref: '#/components/schemas/Department'
       responses:
         '200':
           description: Department updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DepartmentSchema'
+                type: object
+                properties:
+                  department:
+                    $ref: '#/components/schemas/Department'
   /echo:
     get:
       summary: Echo request
@@ -258,89 +304,45 @@ components:
       properties:
         name:
           type: string
-    EmployeeSchema:
+    Employee:
       type: object
       properties:
-        EMPNO:
+        id:
+          $ref: '#/components/schemas/EmployeeId'
+        first:
           type: string
-        FIRSTNME:
+          minLength: 1
+        last:
           type: string
-        MIDINIT:
+          minLength: 1
+        job:
           type: string
-        LASTNAME:
-          type: string
-        WORKDEPT:
-          type: string
-        PHONENO:
-          type: string
-        HIREDATE:
-          type: string
-        JOB:
-          type: string
-        EDLEVEL:
-          type: integer
-        SEX:
-          type: string
-        BIRTHDATE:
-          type: string
-        SALARY:
+          minLength: 1
+        workdept:
+          $ref: '#/components/schemas/DepartmentId'
+        salary:
           type: number
-        BONUS:
-          type: number
-        COMM:
-          type: number
-    EmployeeUpdate:
+          minimum: 1
+    EmployeeId:
+      type: string
+      minLength: 6
+      maxLength: 6
+      description: Employee ID length is 6
+    DepartmentId:
+      type: string
+      minLength: 3
+      maxLength: 3
+      description: Department ID length is 3
+    Department:
       type: object
       properties:
-        FIRSTNME:
+        id:
+          $ref: '#/components/schemas/DepartmentId'
+        name:
           type: string
-        MIDINIT:
+        location:
           type: string
-        LASTNAME:
-          type: string
-        WORKDEPT:
-          type: string
-        PHONENO:
-          type: string
-        HIREDATE:
-          type: string
-        JOB:
-          type: string
-        EDLEVEL:
-          type: integer
-        SEX:
-          type: string
-        BIRTHDATE:
-          type: string
-        SALARY:
-          type: number
-        BONUS:
-          type: number
-        COMM:
-          type: number
-    DepartmentSchema:
-      type: object
-      properties:
-        DEPTNO:
-          type: string
-        DEPTNAME:
-          type: string
-        MGRNO:
-          type: string
-        ADMRDEPT:
-          type: string
-        LOCATION:
-          type: string
-    DepartmentUpdate:
-      type: object
-      properties:
-        DEPTNO:
-          type: string
-        DEPTNAME:
-          type: string
-        MGRNO:
-          type: string
-        ADMRDEPT:
-          type: string
-        LOCATION:
-          type: string
+          description: Can be undefined if no location is set.
+        manager:
+          $ref: '#/components/schemas/EmployeeId'
+          description: Can be null if no manager is set.

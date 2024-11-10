@@ -15,20 +15,12 @@
             employees.forEach(employee => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${employee.EMPNO}</td>
-                    <td>${employee.FIRSTNME}</td>
-                    <td>${employee.MIDINIT}</td>
-                    <td>${employee.LASTNAME}</td>
-                    <td>${employee.WORKDEPT}</td>
-                    <td>${employee.PHONENO}</td>
-                    <td>${employee.HIREDATE}</td>
-                    <td>${employee.JOB}</td>
-                    <td>${employee.EDLEVEL}</td>
-                    <td>${employee.SEX}</td>
-                    <td>${employee.BIRTHDATE}</td>
-                    <td>${employee.SALARY}</td>
-                    <td>${employee.BONUS}</td>
-                    <td>${employee.COMM}</td>
+                    <td>${employee.id}</td>
+                    <td>${employee.first}</td>
+                    <td>${employee.last}</td>
+                    <td>${employee.job}</td>
+                    <td>${employee.workdept}</td>
+                    <td>${employee.salary}</td>
                 `;
                 employeeTableBody.appendChild(row);
             });

@@ -8,20 +8,12 @@ from decimal import Decimal
 
 class Employee(Base):
     __tablename__ = 'EMPLOYEE'
-    EMPNO = Column(CHAR(6), primary_key=True)
-    FIRSTNME = Column(String(12), nullable=False)
-    MIDINIT = Column(CHAR(1), nullable=False)
-    LASTNAME = Column(String(15), nullable=False)
-    WORKDEPT = Column(CHAR(3), ForeignKey('DEPARTMENT.DEPTNO'))
-    PHONENO = Column(CHAR(4))
-    HIREDATE = Column(Date)
-    JOB = Column(CHAR(8))
-    EDLEVEL = Column(Integer, nullable=False)
-    SEX = Column(CHAR(1))
-    BIRTHDATE = Column(Date)
-    SALARY = Column(DECIMAL(9, 2))
-    BONUS = Column(DECIMAL(9, 2))
-    COMM = Column(DECIMAL(9, 2))
+    id = Column(CHAR(6), primary_key=True)
+    first = Column(String(12), nullable=False)
+    last = Column(String(15), nullable=False)
+    job = Column(String(8), nullable=False)
+    workdept = Column(CHAR(3), ForeignKey('DEPARTMENT.id'))
+    salary = Column(DECIMAL(9, 2))
 
     department = relationship("app.models.department.Department", back_populates="employees")
 
@@ -38,11 +30,11 @@ class Employee(Base):
 
     @staticmethod
     def get_by_id(db: Session, empno: str):
-        return db.query(Employee).filter(Employee.EMPNO == empno).first()
+        return db.query(Employee).filter(Employee.id == empno).first()
 
     @staticmethod
     def update(db: Session, empno: str, employee_update: 'EmployeeUpdate'):
-        db_employee = db.query(Employee).filter(Employee.EMPNO == empno).first()
+        db_employee = db.query(Employee).filter(Employee.id == empno).first()
         if db_employee:
             for key, value in employee_update.dict().items():
                 setattr(db_employee, key, value)
@@ -63,35 +55,19 @@ class Employee(Base):
         return employees, total_employees, total_pages
 
 class EmployeeUpdate(BaseModel):
-    FIRSTNME: Optional[str]
-    MIDINIT: Optional[str]
-    LASTNAME: Optional[str]
-    WORKDEPT: Optional[str]
-    PHONENO: Optional[str]
-    HIREDATE: Optional[date]
-    JOB: Optional[str]
-    EDLEVEL: Optional[int]
-    SEX: Optional[str]
-    BIRTHDATE: Optional[date]
-    SALARY: Optional[Decimal]
-    BONUS: Optional[Decimal]
-    COMM: Optional[Decimal]
+    first: Optional[str]
+    last: Optional[str]
+    job: Optional[str]
+    workdept: Optional[str]
+    salary: Optional[Decimal]
 
 class EmployeeSchema(BaseModel):
-    EMPNO: str
-    FIRSTNME: str
-    MIDINIT: str
-    LASTNAME: str
-    WORKDEPT: Optional[str]
-    PHONENO: Optional[str]
-    HIREDATE: Optional[date]
-    JOB: Optional[str]
-    EDLEVEL: int
-    SEX: str
-    BIRTHDATE: date
-    SALARY: Optional[Decimal]
-    BONUS: Optional[Decimal]
-    COMM: Optional[Decimal]
+    id: str
+    first: str
+    last: str
+    job: str
+    workdept: Optional[str]
+    salary: Optional[Decimal]
 
     class Config:
         orm_mode = True

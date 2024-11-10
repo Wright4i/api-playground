@@ -21,11 +21,10 @@
             departments.forEach(department => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${department.DEPTNO}</td>
-                    <td>${department.DEPTNAME}</td>
-                    <td>${department.MGRNO}</td>
-                    <td>${department.ADMRDEPT}</td>
-                    <td>${department.LOCATION}</td>
+                    <td>${department.id}</td>
+                    <td>${department.name}</td>
+                    <td>${department.manager}</td>
+                    <td>${department.location}</td>
                 `;
                 departmentTableBody.appendChild(row);
             });

@@ -87,29 +87,21 @@ async def read_employee(request: Request, response: Response, id: str, db: Sessi
 @router.put("/", response_model=EmployeeSchema)
 async def create_employee(request: Request, response: Response, employee: EmployeeUpdate, db: Session = Depends(get_db)):
     # Generate new employee number
-    max_empno = db.query(Employee).order_by(Employee.EMPNO.desc()).first().EMPNO
-    new_empno = str(int(max_empno) + 1).zfill(6)
+    max_empno = db.query(Employee).order_by(Employee.id.desc()).first().id
+    new_empno = str(int(max_empno) + 1)
     
     # Validate department number
-    if employee.WORKDEPT and not db.query(Department).filter(Department.DEPTNO == employee.WORKDEPT).first():
+    if employee.workdept and not db.query(Department).filter(Department.id == employee.workdept).first():
         raise HTTPException(status_code=400, detail="Invalid department number")
     
     # Create new employee
     new_employee = Employee(
-        EMPNO=new_empno,
-        FIRSTNME=employee.FIRSTNME,
-        MIDINIT=employee.MIDINIT,
-        LASTNAME=employee.LASTNAME,
-        WORKDEPT=employee.WORKDEPT,
-        PHONENO=employee.PHONENO,
-        HIREDATE=employee.HIREDATE,
-        JOB=employee.JOB,
-        EDLEVEL=employee.EDLEVEL,
-        SEX=employee.SEX,
-        BIRTHDATE=employee.BIRTHDATE,
-        SALARY=employee.SALARY,
-        BONUS=employee.BONUS,
-        COMM=employee.COMM
+        id=new_empno,
+        first=employee.first,
+        last=employee.last,
+        job=employee.job,
+        workdept=employee.workdept,
+        salary=employee.salary
     )
     db.add(new_employee)
     db.commit()
@@ -138,6 +130,10 @@ async def create_employee(request: Request, response: Response, employee: Employ
 
 @router.patch("/{id}", response_model=EmployeeSchema)
 async def patch_employee(request: Request, response: Response, id: str, employee: EmployeeUpdate, db: Session = Depends(get_db)):
+    # Validate department number
+    if employee.workdept and not db.query(Department).filter(Department.id == employee.workdept).first():
+        raise HTTPException(status_code=400, detail="Invalid department number")
+    
     db_employee = Employee.update(db, id, employee)
     if db_employee is None:
         response.body = json.dumps({"detail": "Employee not found"}).encode("utf-8")

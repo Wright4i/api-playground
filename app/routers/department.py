@@ -73,31 +73,25 @@ async def read_department(request: Request, response: Response, id: str, db: Ses
 
 @router.put("/", response_model=DepartmentSchema)
 async def create_department(request: Request, response: Response, department: DepartmentUpdate, db: Session = Depends(get_db)):  # Update the function signature
-    if not department.DEPTNO:
+    if not department.id:
         response.body = json.dumps({"detail": "Department number is required"}).encode("utf-8")
         await broadcast_message(db, request, response, "PUT", 400)
         raise HTTPException(status_code=400, detail="Department number is required")
 
-    existing_department = Department.get_by_id(db, department.DEPTNO)
+    existing_department = Department.get_by_id(db, department.id)
     if existing_department:
         response.body = json.dumps({"detail": "Department number must be unique"}).encode("utf-8")
         await broadcast_message(db, request, response, "PUT", 400)
         raise HTTPException(status_code=400, detail="Department number must be unique")
     
-    admin_department = Department.get_by_id(db, department.ADMRDEPT)
-    if not admin_department:
-        response.body = json.dumps({"detail": "Admin department must be a valid DEPTNO"}).encode("utf-8")
-        await broadcast_message(db, request, response, "PUT", 400)
-        raise HTTPException(status_code=400, detail="Admin department must be a valid DEPTNO")
-    
-    # Validate MGRNO is a valid Employee
-    if department.MGRNO:
+    # Validate manager is a valid Employee
+    if department.manager:
         from app.models.employee import Employee  # Import here to avoid circular import
-        manager = db.query(Employee).filter(Employee.EMPNO == department.MGRNO).first()
+        manager = db.query(Employee).filter(Employee.id == department.manager).first()
         if not manager:
-            response.body = json.dumps({"detail": "Manager number must be a valid EMPNO"}).encode("utf-8")
+            response.body = json.dumps({"detail": "Manager number must be a valid Employee ID or null"}).encode("utf-8")
             await broadcast_message(db, request, response, "PUT", 400)
-            raise HTTPException(status_code=400, detail="Manager number must be a valid EMPNO")
+            raise HTTPException(status_code=400, detail="Manager number must be a valid Employee ID or null")
     
     new_department = Department.create(db, department)
     response.body = json.dumps(serialize_model(new_department)).encode("utf-8")
@@ -107,6 +101,19 @@ async def create_department(request: Request, response: Response, department: De
 
 @router.patch("/{id}", response_model=DepartmentSchema)
 async def patch_department(request: Request, response: Response, id: str, department: DepartmentUpdate, db: Session = Depends(get_db)):  # Update the function signature
+    if department.id and department.id != id:
+        existing_department = Department.get_by_id(db, department.id)
+        if existing_department:
+            response.body = json.dumps({"detail": "Department ID must be unique"}).encode("utf-8")
+            await broadcast_message(db, request, response, "PATCH", 400)
+            raise HTTPException(status_code=400, detail="Department ID must be unique")
+    if department.manager:
+        from app.models.employee import Employee  # Import here to avoid circular import
+        manager = db.query(Employee).filter(Employee.id == department.manager).first()
+        if not manager:
+            response.body = json.dumps({"detail": "Manager number must be a valid Employee ID or null"}).encode("utf-8")
+            await broadcast_message(db, request, response, "PATCH", 400)
+            raise HTTPException(status_code=400, detail="Manager number must be a valid Employee ID or null")
     db_department = Department.update(db, id, department)
     if db_department is None:
         response.body = json.dumps({"detail": "Department not found"}).encode("utf-8")

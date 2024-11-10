@@ -6,12 +6,11 @@ from typing import Optional
 
 class Department(Base):
     __tablename__ = 'DEPARTMENT'
-    DEPTNO = Column(CHAR(3), primary_key=True)
-    DEPTNAME = Column(String(29), nullable=False)
-    MGRNO = Column(CHAR(6))
-    ADMRDEPT = Column(CHAR(3), nullable=False)
-    LOCATION = Column(CHAR(16))
-    employees = relationship("app.models.employee.Employee", order_by="app.models.employee.Employee.EMPNO", back_populates="department")  # Update relationship
+    id = Column(CHAR(3), primary_key=True,)
+    name = Column(String(29), nullable=False)
+    manager = Column(CHAR(6))
+    location = Column(CHAR(16))
+    employees = relationship("app.models.employee.Employee", order_by="app.models.employee.Employee.id", back_populates="department")
 
     @staticmethod
     def get_paginated(db: Session, page: Optional[int], limit: Optional[int]):
@@ -30,11 +29,11 @@ class Department(Base):
 
     @staticmethod
     def get_by_id(db: Session, deptno: str):
-        return db.query(Department).filter(Department.DEPTNO == deptno).first()
+        return db.query(Department).filter(Department.id == deptno).first()
 
     @staticmethod
     def update(db: Session, deptno: str, department_update: 'DepartmentUpdate'):
-        db_department = db.query(Department).filter(Department.DEPTNO == deptno).first()
+        db_department = db.query(Department).filter(Department.id == deptno).first()
         if db_department:
             for key, value in department_update.dict().items():
                 setattr(db_department, key, value)
@@ -51,18 +50,16 @@ class Department(Base):
         return new_department
 
 class DepartmentUpdate(BaseModel):
-    DEPTNO: str
-    DEPTNAME: str
-    MGRNO: Optional[str] = None
-    ADMRDEPT: str
-    LOCATION: Optional[str] = None
+    id: str
+    name: str
+    manager: Optional[str] = None
+    location: Optional[str] = None
 
 class DepartmentSchema(BaseModel):
-    DEPTNO: str
-    DEPTNAME: str
-    MGRNO: Optional[str] = None
-    ADMRDEPT: str
-    LOCATION: Optional[str] = None
+    id: str
+    name: str
+    manager: Optional[str] = None
+    location: Optional[str] = None
 
     class Config:
         orm_mode = True
