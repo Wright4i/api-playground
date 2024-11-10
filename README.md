@@ -73,38 +73,22 @@ This API playground serves as a platform for users to test their API clients dur
   - **Request Body**:
     ```json
     {
-        "FIRSTNME": "string",
-        "MIDINIT": "string",
-        "LASTNAME": "string",
-        "WORKDEPT": "string",
-        "PHONENO": "string",
-        "HIREDATE": "string",
-        "JOB": "string",
-        "EDLEVEL": "integer",
-        "SEX": "string",
-        "BIRTHDATE": "string",
-        "SALARY": "number",
-        "BONUS": "number",
-        "COMM": "number"
+        "first": "string",
+        "last": "string",
+        "job": "string",
+        "workdept": "string",
+        "salary": "number"
     }
     ```
   - **Response**:
     ```json
     {
-        "EMPNO": "string",
-        "FIRSTNME": "string",
-        "MIDINIT": "string",
-        "LASTNAME": "string",
-        "WORKDEPT": "string",
-        "PHONENO": "string",
-        "HIREDATE": "string",
-        "JOB": "string",
-        "EDLEVEL": "integer",
-        "SEX": "string",
-        "BIRTHDATE": "string",
-        "SALARY": "number",
-        "BONUS": "number",
-        "COMM": "number"
+        "id": "string",
+        "first": "string",
+        "last": "string",
+        "job": "string",
+        "workdept": "string",
+        "salary": "number"
     }
     ```
 
@@ -122,21 +106,19 @@ This API playground serves as a platform for users to test their API clients dur
   - **Request Body**:
     ```json
     {
-        "DEPTNO": "string",
-        "DEPTNAME": "string",
-        "MGRNO": "string",
-        "ADMRDEPT": "string",
-        "LOCATION": "string"
+        "id": "string",
+        "name": "string",
+        "manager": "string",
+        "location": "string"
     }
     ```
   - **Response**:
     ```json
     {
-        "DEPTNO": "string",
-        "DEPTNAME": "string",
-        "MGRNO": "string",
-        "ADMRDEPT": "string",
-        "LOCATION": "string"
+        "id": "string",
+        "name": "string",
+        "manager": "string",
+        "location": "string"
     }
     ```
 
@@ -197,12 +179,10 @@ api-playground/
 │   │   ├── base.py
 │   │   ├── sqlite.py
 │   ├── models/
-│   │   ├── auth.py
 │   │   ├── department.py
 │   │   ├── employee.py
 │   │   ├── token.py
 │   ├── routers/
-│   │   ├── auth.py
 │   │   ├── department.py
 │   │   ├── echo.py
 │   │   ├── employee.py
