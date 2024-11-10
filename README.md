@@ -202,7 +202,7 @@ api-playground/
 │   ├── employee_tab.html
 │   └── department_tab.html
 ├── static/
-│   └── css/
+│   ├── css/
 │   │   ├── dracula.css
 │   │   └── styles.css
 │   └── js/
