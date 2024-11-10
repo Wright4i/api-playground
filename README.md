@@ -181,18 +181,18 @@ api-playground/
 │   ├── utils.py
 │   ├── connections/
 │   │   ├── base.py
-│   │   ├── sqlite.py
+│   │   └── sqlite.py
 │   ├── models/
 │   │   ├── department.py
 │   │   ├── employee.py
-│   │   ├── token.py
-│   ├── routers/
-│   │   ├── department.py
-│   │   ├── echo.py
-│   │   ├── employee.py
-│   │   ├── reverse.py
-│   │   ├── token.py
-│   │   ├── websocket.py
+│   │   └── token.py
+│   └──  routers/
+│       ├── department.py
+│       ├── echo.py
+│       ├── employee.py
+│       ├── reverse.py
+│       ├── token.py
+│       └── websocket.py
 ├── templates/
 │   ├── index.html
 │   ├── auth_token_modal.html
@@ -200,19 +200,19 @@ api-playground/
 │   ├── send_tab.html
 │   ├── receive_tab.html
 │   ├── employee_tab.html
-│   ├── department_tab.html
+│   └── department_tab.html
 ├── static/
 │   └── css/
-│   ├── dracula.css
-│   ├── styles.css
-│   └── css/
-│   ├── admin_panel_modal.js
-│   ├── auth_token_modal.js
-│   ├── department_tab.js
-│   ├── employee_tab.js
-│   ├── index.js
-│   ├── receive_tab.js
-│   ├── send_tab.js
+│   │   ├── dracula.css
+│   │   └── styles.css
+│   └── js/
+│       ├── admin_panel_modal.js
+│       ├── auth_token_modal.js
+│       ├── department_tab.js
+│       ├── employee_tab.js
+│       ├── index.js
+│       ├── receive_tab.js
+│       └── send_tab.js
 ├── requirements.txt
 ├── playground.yml
 └── README.md
