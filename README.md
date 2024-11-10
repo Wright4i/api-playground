@@ -8,31 +8,35 @@ This API playground serves as a platform for users to test their API clients dur
 - **Feature**: Allow users to generate their own authentication tokens.
 - **Frontend**: A form where users can input their name.
 - **Backend**: Generate and return a unique token for the user.
+<img width="973" alt="image" src="https://github.com/user-attachments/assets/8d41c396-ce49-4165-a58f-5b7ac3edadf9">
 
 ### 2. Display Incoming Requests
 - **Feature**: Stream incoming API requests to the browser in real-time.
 - **Frontend**: A live feed that displays incoming requests as they are received.
 - **Backend**: Capture and stream incoming requests to the frontend using WebSockets.
+<img width="1484" alt="image" src="https://github.com/user-attachments/assets/c80fe9df-c918-4889-ac33-988d6d3a453f">
 
 ### 3. Reverse API Calls
 - **Feature**: Allow users to call their own API hosts.
 - **Frontend**: An input field for the endpoint URI, request type (GET/PUT/PATCH), content type, and request body (for PUT/PATCH).
 - **Backend**: Send the specified request to the provided endpoint and display the response.
+<img width="1404" alt="image" src="https://github.com/user-attachments/assets/8fdc1080-d6bf-4788-9cd8-7ced75378ccd">
 
 ### 4. Employee and Department Management
 - **Feature**: Manage employee and department sample data.
 - **Frontend**: Tables to display employee and department data with pagination.
 - **Backend**: Endpoints to create, read, update, and delete employee and department records.
+<img width="1384" alt="image" src="https://github.com/user-attachments/assets/ab87d890-8964-4eac-bb93-e0d567bfdf91">
 
 ### 5. Admin Panel
 - **Feature**: Admin functionalities to reset employee, department, and token data.
 - **Frontend**: Admin panel with password protection.
 - **Backend**: Endpoints to reset employee, department, and token data.
+<img width="662" alt="image" src="https://github.com/user-attachments/assets/34f8056c-036a-4fff-b8f0-31d1890f2822">
 
 ## Technical Requirements
 - **Python Version**: 3.9+
 - **Libraries**: FastAPI, SQLAlchemy, Jinja2, Uvicorn, more (see: `requirements.txt`)
-- **Frontend**: Simple and user-friendly interface
 - **Platform**: Designed on macOS for IBM i. Should run anywhere you can install the required python packages. Database is self-contained.
 
 ## API Endpoints
