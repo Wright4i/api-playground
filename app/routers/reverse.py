@@ -20,7 +20,10 @@ class ReverseRequest(BaseModel):
     body: Optional[str] = None
 
 def is_local_address(url: str) -> bool:
-    local_addresses = ["localhost", "127.0.0.1", "::1"]
+    local_addresses = []
+    local_addresses.append(f"localhost:{os.getenv('PORT')}")
+    local_addresses.append(f"127.0.0.1:{os.getenv('PORT')}")
+    local_addresses.append(f"[::1]:{os.getenv('PORT')}")
     local_addresses.append(f"{os.getenv('HOST')}:{os.getenv('PORT')}")  
     return any(local_address in url for local_address in local_addresses)
 
