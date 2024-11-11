@@ -85,7 +85,11 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
             document.getElementById('response-content').textContent = content;
         }
 
-        console.log(`Response: ${result}`);
+        try {
+            console.log(`Response: ${JSON.stringify(result, null, 2)}`);
+        } catch (error) {
+            console.log(`Response: ${result}`);
+        }
     } catch (error) {
         console.error(`Error: ${error}`);
         showToast(`Error: ${error.message}`, 'is-danger');

@@ -55,8 +55,16 @@ async def reverse_api_call(reverse_request: ReverseRequest):
         else:
             raise HTTPException(status_code=400, detail="Invalid request method")
         
+        content_type = response.headers.get('Content-Type')
+        if content_type and 'application/json' in content_type:
+            try:
+                content = response.json()
+            except json.JSONDecodeError:
+                content = response.text
+        else:
+            content = response.text
         
-        return {"status_code": response.status_code, "content": response.json()}
+        return {"status_code": response.status_code, "content": content}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
