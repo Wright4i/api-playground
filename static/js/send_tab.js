@@ -1,25 +1,19 @@
-// Handle reverse form submission
-document.getElementById('reverse-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const url = document.getElementById('url').value;
-    const method = document.getElementById('method').value;
-    const contentType = document.getElementById('content-type').value;
-    let body = document.getElementById('body').value.trim();
-    let headers = {
-        'Content-Type': contentType === 'json' ? 'application/json' : 'text/plain'
-    };
+let interval; // Define interval in a higher scope
+
+function startProgressBar() {
+    const progressBar = document.getElementById('send-progress-bar');
+
+    progressBar.style.display = 'block';
+    progressBar.className = 'progress is-primary';
 
     const sendButton = document.getElementById('send-request-button');
-    const progressBar = document.getElementById('send-progress-bar');
 
     sendButton.disabled = true;
     sendButton.className = 'button is-primary is-fullwidth is-light is-outlined';
     sendButton.innerText = 'Sending...';
-    progressBar.style.display = 'block';
-    progressBar.className = 'progress is-primary';
 
     let progress = 0;
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
         progress += 1;
         progressBar.value = progress;
         if (progress >= 90) {
@@ -31,21 +25,52 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
             clearInterval(interval);
         }
     }, 100);
+}
+
+function stopProgressBar() {
+    clearInterval(interval);
+    const progressBar = document.getElementById('send-progress-bar');
+    const sendButton = document.getElementById('send-request-button');
+    progressBar.value = 100;
+    setTimeout(() => {
+        sendButton.disabled = false;
+        sendButton.className = 'button is-link is-fullwidth';
+        sendButton.innerText = 'Send Request';
+        progressBar.style.display = 'none';
+        progressBar.value = 0;
+        progressBar.className = 'progress is-primary';
+    }, 500);
+}
+
+// Handle reverse form submission
+document.getElementById('reverse-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const url = document.getElementById('url').value;
+    const method = document.getElementById('method').value;
+    const reversetype = document.getElementById('content-type').value;
+    let body = document.getElementById('body').value.trim();
+    let headers = {
+        'Content-Type': 'application/json'
+    };
+
+    startProgressBar(); 
 
     console.log(`URL: ${url}`);
     console.log(`Method: ${method}`);
-    console.log(`Content-Type: ${contentType}`);
+    console.log(`Reverse-Type: ${reversetype}`);
     console.log(`Body: ${body}`);
 
-    if (contentType === 'json') {
+    if (reversetype === 'json') {
         if (body === '') {
             showToast('Body cannot be blank for JSON content type', 'is-danger');
+            stopProgressBar(); 
             return;
         } else {
             try {
-                JSON.parse(body);  // Validate JSON
+                JSON.parse(body);  
             } catch (e) {
                 showToast('Invalid JSON in body', 'is-danger');
+                stopProgressBar();  
                 return;
             }
         }
@@ -55,7 +80,7 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
 
     body = method === 'GET' ? null : body;
 
-    const requestBody = JSON.stringify({ url, method, headers: {}, body });
+    const requestBody = JSON.stringify({ url, method, reversetype, headers: {}, body });
 
     console.log(`Request Body: ${requestBody}`);
 
@@ -63,7 +88,7 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
         const response = await Promise.race([
             fetch('/reverse/', {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: headers,
                 body: requestBody
             }),
             new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 10000))
@@ -93,18 +118,9 @@ document.getElementById('reverse-form').addEventListener('submit', async functio
     } catch (error) {
         console.error(`Error: ${error}`);
         showToast(`Error: ${error.message}`, 'is-danger');
-        document.getElementById('response-content').textContent = `Error: ${error.message}`;;
+        document.getElementById('response-content').textContent = `Error: ${error.message}`;
 
     } finally {
-        clearInterval(interval);
-        progressBar.value = 100;
-        setTimeout(() => {
-            sendButton.disabled = false;
-            sendButton.className = 'button is-link is-fullwidth';
-            sendButton.innerText = 'Send Request';
-            progressBar.style.display = 'none';
-            progressBar.value = 0;
-            progressBar.className = 'progress is-primary';
-        }, 500);
+        stopProgressBar();
     }
 });

@@ -17,6 +17,7 @@ class ReverseRequest(BaseModel):
     url: str
     method: str
     headers: dict
+    reversetype: str
     body: Optional[str] = None
 
 def is_local_address(url: str) -> bool:
@@ -40,6 +41,10 @@ async def reverse_api_call(reverse_request: ReverseRequest):
 
     try:
         headers = reverse_request.headers
+        if reverse_request.reversetype == "json":
+            headers["Content-Type"] = "application/json"
+        else:
+            headers["Content-Type"] = "text/plain"
         if reverse_request.method.upper() == "GET":
             response = requests.get(reverse_request.url, headers=headers, timeout=10)
         elif reverse_request.method.upper() == "PUT":
